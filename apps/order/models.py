@@ -21,8 +21,8 @@ class Item(models.Model):
 class Order(models.Model):
     restaurant = models.ForeignKey(Restaurant, related_name = "orders")
     table_id = models.IntegerField()
-    order_status = models.CharField(max_length = 10)
-    order_total = models.FloatField()
+    order_status = models.CharField(max_length = 10, default = "pending")
+    order_total = models.FloatField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

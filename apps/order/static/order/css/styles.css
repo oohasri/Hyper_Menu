@@ -7,3 +7,19 @@ form{
 	vertical-align: top;
 	width: 49%;
 }
+.center{
+	width: 120px;
+    margin: 10px auto;
+}
+.full_width{
+	width: 100%;
+	text-align: center; 
+	margin: auto auto;
+}
+.fixed{
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	width: 100%;
+}
