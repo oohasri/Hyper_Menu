@@ -19,3 +19,5 @@ def menu_customer(request, restaurant_id, table_id):
 	}
 	return render(request, "order/menu.html", dict)
 # Create your views here.
+
+
