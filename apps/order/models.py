@@ -1,13 +1,28 @@
+from __future__ import unicode_literals
+from django.contrib import messages
 from django.db import models
+import re
+EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9\.\+_-]+@[a-zA-Z0-9\._-]+\.[a-zA-Z]*$')
+
+class UserManager(models.Manager):
+    def validate(self, postData):
+        errors = {}
+        if len(postData['password']) < 4:
+            errors['password'] = "Password should be at least 4 characters"
+        if postData['confirm_password'] != postData['password']:
+            errors['confirm_password'] = "Passwords do not match"
+        return errors
+
 
 class Restaurant(models.Model):
     restaurant_name = models.CharField(max_length=100)
     email = models.CharField(max_length=100)
-    location = models.CharField(max_length=100)
     phone_number = models.CharField(max_length=20)
+    location = models.CharField(max_length=100)
     password = models.CharField(max_length=20)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    objects = UserManager()
 
 class Item(models.Model):
     restaurant = models.ForeignKey(Restaurant, related_name = "items")
@@ -32,10 +47,4 @@ class Order_item(models.Model):
     quantity = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-
-
-
-
-
 # Create your models here.
