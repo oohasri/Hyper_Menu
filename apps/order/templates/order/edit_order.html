@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Edit Order</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	{% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static 'order/css/styles.css' %}">
+</head>
+<body>
+	<div class="container">
+		
+		<h4>Order ID : 1</h4>
+		<table class="table">
+			<thead class="thead-light">
+				<tr>
+					<th scope="col">Item</th>
+					<th scope="col">Quantity</th>
+					<th scope="col">Price</th>
+					<th scope="col"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Sandwich</td>
+					<td>2</td>
+					<td>$5</td>
+					<td><a href="#">Cancel</a></td>
+				</tr>
+				<tr>
+					<td>Wrap</td>
+					<td>4</td>
+					<td>$7</td>
+					<td><a href="#">Cancel</a></td>
+				</tr>
+				<tr>
+					<td>Burger</td>
+					<td>3</td>
+					<td>$6</td>
+					<td><a href="#">Cancel</a></td>
+				</tr>
+				<tr>
+					<td><a class="add_item_btn btn btn-primary" href="">Add items</a></td>
+
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
