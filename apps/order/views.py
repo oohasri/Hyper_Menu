@@ -18,6 +18,15 @@ def menu_customer(request, restaurant_id, table_id):
 		'restaurant' : this_restaurant[0]
 	}
 	return render(request, "order/menu.html", dict)
+
+
+def display_active_orders(request):
+	all_order = Order.objects.all()
+	context = {
+		"orders":all_order,
+	}
+	return render(request,"order/active_orders.html",context)
 # Create your views here.
+
 
 
