@@ -95,7 +95,10 @@ def order_track(request):
 	return render(request, "order/track_order.html", dict)
 
 def display_active_orders(request):
+	rest_id = request.session['id']
+	this_rest = Restaurant.objects.get(id=rest_id)
 	all_order = Order.objects.exclude(order_status="ready")
+	all_order=all_order.filter(restaurant=this_rest)
 	#all_order = Order.objects.all()
 	for order in all_order:
 		print("all",order.get_orders.all())
@@ -103,8 +106,6 @@ def display_active_orders(request):
 			print("yes")
 		else:
 			print("no")
-	rest_id = request.session['id']
-	this_rest = Restaurant.objects.get(id=rest_id)
 	context = {
 		"this_rest":this_rest,
 		"orders":all_order,
@@ -179,8 +180,12 @@ def remove_item(request,order_id,order_item_id):
 	return redirect('/edit/'+str(order_id))
 	
 def view_menu(request):
+	rest_id = request.session['id']
+	this_rest = Restaurant.objects.get(id=rest_id)
+	print(this_rest.restaurant_name)
+	all_items = Item.objects.filter(restaurant=this_rest)
 	context = {
-		"list_of_items": Item.objects.all(),
+		"list_of_items": all_items,
 	}
 	return render(request, "order/editmenu.html", context)
 
@@ -192,25 +197,55 @@ def add_item(request):
 		Item.objects.create(restaurant=Restaurant.objects.get(id=request.session['id']), item_name=request.POST["new_name"], item_description=request.POST["new_desc"], item_price=new_price, item_img_url="none" )
 		return redirect("/view_menu")
 
-def edit_item(request, item_id):
-	if request.method == 'POST':
+def edit_item(request,item_id):
+		rest_id = request.session['id']
+		this_rest = Restaurant.objects.get(id=rest_id)
 		edit_this = Item.objects.get(id=item_id)
-		edit_this.item_name = request.POST["edit_name"]
-		edit_this.item_description = request.POST["edit_desc"]
-		price = request.POST["edit_price"]
-		price = float(price)
-		edit_this.item_price = price
-		edit_this.save() 	
-		return redirect('/view_menu')
-	if request.method == "GET":
+		print("heloo",edit_this.id)
 		context = {
-			'item_to_edit': Item.objects.get(id=item_id)
+			"this_rest" :this_rest,
+			"item_to_edit" : edit_this,
 		}
-		return render(request, 'order/editpage.html', context)
-	
+		return render(request, 'order/editpage.html',context)
+
+def add_item_to_order(request,order_id):
+	this_order = Order.objects.get(id=order_id)
+	rest_id = request.session['id']
+	this_rest = Restaurant.objects.get(id=rest_id)
+	all_items = Item.objects.filter(restaurant=this_rest)
+	context = {
+		"this_order" : this_order,
+		"list_of_items": all_items,
+	}
+	return render(request,'order/add_items_order.html',context)
+
+def edit_update_item(request, item_id):
+	if request.method == "POST":
+		this_item = Item.objects.get(id=item_id)
+		item_name = request.POST['edit_name']
+		item_desc = request.POST['edit_desc']
+		item_price = request.POST['edit_price']
+		item_price = float(item_price)
+		this_item.item_name = item_name
+		this_item.item_price = item_price
+		this_item.item_description = item_desc
+		this_item.save()
+		return redirect('/order/dashboard')
+		 
+def create_new_item_order(request):
+	if request.method == "POST":
+		item_list = request.POST.getlist('item')
+		order_id = request.POST['order_id']
+		this_order = Order.objects.get(id=order_id)
+		for item in item_list:		
+		 	print("helloooo",item,order_id)
+		return redirect('/order/dashboard')
+
+		
 def delete(request, item_id):
 		Item.objects.get(id=item_id).delete()
 		return redirect('/view_menu')
+
 
 		
 

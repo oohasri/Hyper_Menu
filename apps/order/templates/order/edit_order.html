@@ -26,7 +26,7 @@
 			</div> -->
 		
 			<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-				<a class="navbar-brand" href="menu.html">Menu</a>
+				<a class="navbar-brand" href="/view_menu">Menu</a>
 				<a class="navbar-brand" href="/order/dashboard">Active Orders</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
 					<span class="navbar-toggler-icon"></span>
@@ -62,7 +62,7 @@
 				</tr>
 				{% endfor %}
 				<tr>
-					<td><a class="add_item_btn btn btn-primary" href="">Add items</a></td>
+					<td><a class="add_item_btn btn btn-primary" href="/order/add/item/{{order.id}}">Add items</a></td>
 				</tr>
 			</tbody>
 		</table>
