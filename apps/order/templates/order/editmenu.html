@@ -147,6 +147,12 @@
       text-decoration: none;
       cursor: pointer;
     }
+    .nav-link{
+      color:white;
+    }
+    #logout{
+      margin-left: 900px;
+    }
   </style>
 </head>
 
@@ -157,35 +163,16 @@
 
 
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-      <a class="nav-link" id="add-item" href="#myModal2"> add item</a>
-      <a class="nav-link" id="logout" href="/login"> Log out</a>
-      <a class="nav-link" id="active-orders" href=""> Active Orders</a>
+      <a class="nav-link" id="add-item" href="#myModal2"> Add Item</a>
+      <a class="nav-link" id="active-orders" href="/order/dashboard"> Active Orders</a>
+      <a class="nav-link" id="logout" href="/logout"> Logout</a>
     </nav>
 
 
     <div id="main-content">
 
       <ol class="center">
-        <table>
-          {% for menuitems in list_of_items %}
-          <!-- <input type='hidden' name="this_item" value=""> -->
-          <tr>
-            <td>
-              {{menuitems.id}}
-            </td>
-            <td class="food-name">{{menuitems.item_name}} {{menuitems.item_price}}</td>
-            <td>
-              <!-- <form action="/edit_page/{{menuitems.id}}">
-                <input type='submit' class='button'  value="Edit">
-              </form> -->
-              <a href="/edit_page/{{menuitems.id}}" name="">edit</a>
-            </td>
-            <td>
-              <a href="/delete/{{menuitems.id}}" name="">delete</a>
-            </td>
-          </tr>
-          {% endfor %}
-        </table>
+       
       </ol>
 
     </div>
@@ -205,6 +192,32 @@
       </form>
     </div>
   </div>
+  <ol class="center">
+  <table class="table">
+			<thead class="thead-light">
+				<tr>
+					<th scope="col">No.</th>
+          <th scope="col">Item</th>
+          <th scope="col">Price</th>
+					<th scope="col">Action</th>
+					<th scope="col"></th>
+				</tr>
+			</thead>
+			<tbody>
+          {% for menuitems in list_of_items %}
+				<tr>
+          <td><li></li></td>
+					<td>{{menuitems.item_name}}</td>
+					<td>{{menuitems.item_price}}</td>
+					<td><a href="/edit_page/{{menuitems.id}}" name="">Edit</a> | <a href="/delete/{{menuitems.id}}" name="">Delete</a></td>
+				</tr>
+				{% endfor %}
+				<tr>
+					<td><a class="add_item_btn btn btn-primary" href="">Add Items</a></td>
+				</tr>
+			</tbody>
+    </table>
+  </ol> 
 
   <script>
     //*********************************************************************************************************************//

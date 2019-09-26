@@ -29,8 +29,14 @@
         color: white;
     }
     #logout_link{
-        margin-left: 1050px;
+        margin-left: 1060px;
     }
+    #rest_name_link{
+        margin-left: 500px;
+    }
+    .jumbotron {
+    padding: 0.5rem 2rem
+}
 </style>
 
 
@@ -38,9 +44,11 @@
 
 <body>
 
-   
+    <div class="jumbotron text-center" style="margin-bottom:0">
+        <h1>{{this_rest.restaurant_name}}</h1>
+    </div>   
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-        <a class="navbar-brand" href="menu.html">Menu</a>
+        <a class="navbar-brand" href="/view_menu">Menu</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -70,13 +78,11 @@
                             <div class="col">{{item.item.item_name}}</div>
                             <div class="col quantity">{{item.quantity}}</div>
                         </div>
-                     
                             {% endfor %}
-                        </p>
-                       
-                        <form action="/update/status" method="POST">
-                            {% csrf_token %}
-                            <input type="hidden" value="{{order.id}}" name="order_id">
+                    </p>
+                    <form action="/update/status" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" value="{{order.id}}" name="order_id">
                             <select class="drop_down" name="order_status">
                                 <option value="default">Select Status</option>
                                 <option value="process">In Progress</option>
@@ -85,9 +91,11 @@
                             </select>
                             <input type="submit" class="button_status" name="submit" value="Update Status">
                         </form>
-                        <a href="/edit/{{order.id}}" class="card-link">Edit Order</a>
-                    </div>
-                    {% endfor %}
+                    <a href="/edit/{{order.id}}" class="card-link">Edit Order</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
 
 <script type="text/javascript">
     $(document).ready(function(){
@@ -106,7 +114,6 @@
 });
 
 </script>
-
 </body>
 
 </html>
