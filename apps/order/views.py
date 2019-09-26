@@ -29,9 +29,12 @@ def to_cart(request):
 	order = Order.objects.create(restaurant = Restaurant.objects.get(id=request.POST['restaurantid'][0]), table_id = request.session['table_id'], order_status = "pending")
 	order_id = order.id
 	request.session["orderid"] = order_id
+	print(request.POST.getlist('itemid'))
 	for i in request.POST.getlist('itemid'):
-		Order_item.objects.create(item=Item.objects.get(id=i), order=Order.objects.get(id=order_id), quantity=request.POST['quant[{}]'.format(i)])
-	final_order = Order.objects.get(id=order.id)
+		if request.POST['quant['+i+']'] != '':
+			Order_item.objects.create(item=Item.objects.get(id=i), order=Order.objects.get(id=order_id), quantity=request.POST['quant['+i+']'][0])
+			final_order = Order.objects.get(id=order.id)
+			# final_order.order_total += i.item.item_price * i.quantity
 	for i in final_order.get_orders.all():
 		final_order.order_total += i.item.item_price * i.quantity
 	final_order.save()
