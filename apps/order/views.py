@@ -3,11 +3,14 @@ from .models import *
 import bcrypt
 
 
+# import brcypt
+from django.contrib import messages
+
 def index(request):
+	if "restaurant_name" not in request.session:
+		request.session['restaurant_name'] = ""
+
 	return render(request, "order/index.html")
-
-# Customer view (menu)
-
 
 def menu_customer(request, restaurant_id, table_id):
 	print(restaurant_id)
@@ -107,7 +110,6 @@ def display_active_orders(request):
 		"orders":all_order,
 	}
 	return render(request,"order/active_orders.html",context)
-# Create your views here.
 
 def reload_orders(request):
 	all_order = Order.objects.all()
@@ -183,7 +185,39 @@ def remove_item(request,order_id,order_item_id):
 	this_order_item_id.delete()
 	return redirect('/edit/'+str(order_id))
 	
+def view_menu(request):
+	context = {
+		"list_of_items": Item.objects.all(),
+	}
+	return render(request, "order/editmenu.html", context)
 
+def add_item(request):
+	if request.method == 'POST':
+		new_price = request.POST['new_price']
+	
+		new_price = float(new_price)
+		Item.objects.create(restaurant=Restaurant.objects.get(id=request.session['id']), item_name=request.POST["new_name"], item_description=request.POST["new_desc"], item_price=new_price, item_img_url="none" )
+		return redirect("/view_menu")
+
+def edit_item(request, item_id):
+	if request.method == 'POST':
+		edit_this = Item.objects.get(id=item_id)
+		edit_this.item_name = request.POST["edit_name"]
+		edit_this.item_description = request.POST["edit_desc"]
+		price = request.POST["edit_price"]
+		price = float(price)
+		edit_this.item_price = price
+		edit_this.save() 	
+		return redirect('/view_menu')
+	if request.method == "GET":
+		context = {
+			'item_to_edit': Item.objects.get(id=item_id)
+		}
+		return render(request, 'order/editpage.html', context)
+	
+def delete(request, item_id):
+		Item.objects.get(id=item_id).delete()
+		return redirect('/view_menu')
 
 		
 

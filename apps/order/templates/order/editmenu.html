@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Page Title</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+  <script src='main.js'></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <style>
+    table {
+      text-align: center;
+    }
+
+    .food-name {
+      width: 175px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .main-content {
+      width: 50%;
+    }
+
+    .center {
+      padding: 0px;
+      margin: 20px;
+      width: 100%;
+      text-align: center;
+      list-style-position: inside;
+    }
+
+    input {
+      text-decoration: none;
+    }
+
+    .button {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 5px 10px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+    }
+
+    .delbutton {
+      background-color: #f44336;
+      ;
+      border: none;
+      color: white;
+      padding: 5px 10px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+    }
+
+    .updateButton {
+
+      background-color: #008CBA;
+      border: none;
+      color: white;
+      padding: 10px 15px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+    }
+
+
+    .modal {
+      text-align: center;
+      display: none;
+      /* Hidden by default */
+      position: fixed;
+      /* Stay in place */
+      z-index: 1;
+      /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%;
+      /* Full width */
+      height: 100%;
+      /* Full height */
+      overflow: auto;
+      /* Enable scroll if needed */
+      background-color: rgb(0, 0, 0);
+      /* Fallback color */
+      background-color: rgba(0, 0, 0, 0.4);
+      /* Black w/ opacity */
+    }
+
+    /* Modal Content/Box */
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto;
+      /* 15% from the top and centered */
+      padding: 20px;
+      border: 1px solid #888;
+      width: 70%;
+      /* Could be more or less, depending on screen size */
+    }
+
+    /* The Close Button */
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close2 {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .close2:hover,
+    .close2:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <h1> View Menu </h1>
+
+
+
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+      <a class="nav-link" id="add-item" href="#myModal2"> add item</a>
+      <a class="nav-link" id="logout" href="/login"> Log out</a>
+      <a class="nav-link" id="active-orders" href=""> Active Orders</a>
+    </nav>
+
+
+    <div id="main-content">
+
+      <ol class="center">
+        <table>
+          {% for menuitems in list_of_items %}
+          <!-- <input type='hidden' name="this_item" value=""> -->
+          <tr>
+            <td>
+              {{menuitems.id}}
+            </td>
+            <td class="food-name">{{menuitems.item_name}} {{menuitems.item_price}}</td>
+            <td>
+              <!-- <form action="/edit_page/{{menuitems.id}}">
+                <input type='submit' class='button'  value="Edit">
+              </form> -->
+              <a href="/edit_page/{{menuitems.id}}" name="">edit</a>
+            </td>
+            <td>
+              <a href="/delete/{{menuitems.id}}" name="">delete</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+      </ol>
+
+    </div>
+  </div>
+
+
+  <div id="myModal2" class="modal">
+    <div class="modal-content">
+      <span class="close2">&times;</span>
+      <form action="/add_item" method="post">
+        {% csrf_token %}
+        <h1> Add Item</h1>
+        <p>Item Name:<input type="text" name="new_name"> </p>
+        <p>Description:<input type="text" name="new_desc"></p>
+        <p>Price:<input type="number" name="new_price" step="0.01"></p>
+        <input type="submit" name="additem" class="updateButton" value="Add">
+      </form>
+    </div>
+  </div>
+
+  <script>
+    //*********************************************************************************************************************//
+    var modal2 = document.getElementById("myModal2")
+    var span2 = document.getElementsByClassName("close2")[0];
+
+    var add_item = document.getElementById("add-item");
+    add_item.onclick = function () {
+      modal2.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span2.onclick = function () {
+      modal2.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+      if (event.target == modal2) {
+        modal2.style.display = "none";
+      }
+    }
+  </script>
+</body>
+</html>

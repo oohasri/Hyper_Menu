@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+</head>
+<body>
+        <form action='/edit_page/{{item_to_edit.id}}' method="post">
+            {% csrf_token %}
+            <h1> Edit Item</h1> 
+            <p>Item Name:<input type="text" name="edit_name" placeholder="{{item_to_edit.restaurant_name}}"> </p>
+            <p>Description:<input type="text" name="edit_desc" placeholder="{{item_to_edit.restaurant_desc}}"></p>
+            <p>Price:<input type="text" name="edit_price" placeholder="{{item_to_edit.restaurant_price}}"></p>
+            <input type="submit" class="updateButton" value="Update">
+          </form>
+</body>
+</html>
