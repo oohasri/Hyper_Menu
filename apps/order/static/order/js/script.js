@@ -70,6 +70,7 @@ $(document).ready(function(){
             if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
                 e.preventDefault();
             }
-        });
+    });
+    
 });
     

@@ -11,6 +11,7 @@ urlpatterns = [
 	url(r'^order/track_order$', views.order_track),
 	url(r'^order/dashboard$', views.display_active_orders),
 	url(r'^register$', views.register),
+	url(r'^api/order/dashboard$', views.reload_orders),
 	url(r'^login$', views.login),
 	url(r'^update/status$', views.update_staus),
 	url(r'^edit/(?P<order_id>\d+)$', views.display_edit_form),

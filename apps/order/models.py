@@ -23,9 +23,6 @@ class UserManager(models.Manager):
             errors['confirm_password'] = "Passwords do not match"
         return errors
 
-
-
-
 class Restaurant(models.Model):
     restaurant_name = models.CharField(max_length=100)
     email = models.CharField(max_length=100)
@@ -45,7 +42,6 @@ class Item(models.Model):
     item_img_url = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
 
 class Order(models.Model):
     restaurant = models.ForeignKey(Restaurant, related_name="orders")
