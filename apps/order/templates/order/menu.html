@@ -23,12 +23,11 @@
 
 <body>
 
-    <div class="jumbotron text-center" style="margin-bottom:0">
-        <h1>{{restaurant.restaurant_name}}</h1>
-        <p>WOW GOOD TASTE IN MOUTH</p>
+    <div style="margin-bottom:0; text-align: center;">
+        <h2 style="margin-top:10px;"><img style="height: 50px" src="{% static 'order/images/logo.png' %}">{{restaurant.restaurant_name}}</h2>
     </div>
 
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <!-- <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <a class="navbar-brand" href="order.html">Cart</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>
@@ -40,43 +39,45 @@
                 </li>
             </ul>
         </div>
-    </nav>
+    </nav> -->
 
-    <div class="container" style="margin-top:30px; margin-bottom: 30px;">
+    <div class="container" >
         <div class="row">
             {% for item in items %}
-                <form action="/add_to_cart" method="POST">
-                    <div class="card full_width">
-                        <img class="card-img-top" src="{{item.item_img_url}}" alt="Card image cap">
-                        <div class="card-body">
-                            <input type="hidden" name="itemid" value="{{item.id}}">
-                            <h5 class="card-title">{{item.item_name}}</h5>
-                            <p class="card-text">{{item.item_description}}</p>
-                            <div class="center">
-                                <div class="input-group">
-                                  <span class="input-group-btn">
-                                      <button type="button" class="btn btn-default btn-number" disabled="disabled" data-type="minus" data-field="quant[{{item.id}}]">
-                                          <span class="glyphicon glyphicon-minus"></span>
-                                      </button>
-                                  </span>
-                                  <input type="text" name="quant[{{item.id}}]" class="form-control input-number" value="0" min="0" max="10">
-                                  <span class="input-group-btn">
-                                      <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[{{item.id}}]">
-                                          <span class="glyphicon glyphicon-plus"></span>
-                                        </button>
-                                    </span>
-                                </div>
-                            </div>
+            <form action="/add_to_cart" method="POST">
+                {% csrf_token %}
+                <div class="card full_width">
+                    <img class="card-img-top" src="{{item.item_img_url}}" alt="Card image cap">
+                    <div class="card-body">
+                        <input type="hidden" name="itemid" value="{{item.id}}">
+                        <input type="hidden" name="restaurantid" value="{{restaurant.id}}">
+                        <h5 class="card-title">{{item.item_name}}    ${{item.item_price}}</h5>
+                        <p class="card-text">{{item.item_description}}</p>
+                        <div class="center">
+                            <div class="input-group">
+                              <span class="input-group-btn">
+                                  <button type="button" class="btn btn-default btn-number" disabled="disabled" data-type="minus" data-field="quant[{{item.id}}]">
+                                      <span class="glyphicon glyphicon-minus"></span>
+                                  </button>
+                              </span>
+                              <input type="text" name="quant[{{item.id}}]" class="form-control input-number" value="" min="1" max="10" placeholder="0">
+                              <span class="input-group-btn">
+                                  <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[{{item.id}}]">
+                                      <span class="glyphicon glyphicon-plus"></span>
+                                  </button>
+                              </span>
+                          </div>
+                      </div>
 
-                          <input type="submit" class="btn btn-primary" value="Add to cart">
-                        </div>
-                    </div>
-                </form>
-            {% endfor %}
-        </div>
-    </div>
-  <button type="button" class="btn btn-primary fixed">View Cart</button>
+                      <input type="button" class="btn btn-primary" value="Add to cart">
+                  </div>
+              </div>
 
+              {% endfor %}
+          </div>
+      </div>
+      <input type="submit" class="btn btn-primary fixed" value="View Cart"></button>
+  </form>
 </div>
 
 <!-- if needed -->
