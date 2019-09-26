@@ -13,32 +13,41 @@
     crossorigin="anonymous"></script>
     <title>Active Orders For Kitchen</title>
     <style>
-        .card_display{
-            margin: 10px;
-            padding: 15px;
-            border-radius: 5px;
-            background-color: #e9ecef;
-        }
-        .container{
-            margin-left: 150px;
-        }
-        .button_status{
-         background-color: #007bff;
-         border-radius: 8px;
-         color: white;
-     }
- </style>
+
+      .card_display{
+        margin: 10px;
+        padding: 15px;
+        border-radius: 5px;
+        background-color: #e9ecef;
+    }
+    .container{
+        margin-left: 150px;
+    }
+    .button_status{
+        background-color: #007bff;
+        border-radius: 8px;
+        color: white;
+    }
+    #logout_link{
+        margin-left: 1050px;
+    }
+</style>
+
+
 </head>
 
 <body>
 
+   
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-        <div class="container">
-            <div class="row">
-                <div class="col"><a class="navbar-brand" href="#">Restaurant name</a></div>
-                <div class="col"><a class="navbar-brand" href="#">Dashboard</a></div>
-                <div class="col"><a class="navbar-brand" href="#">Logout</a></div>
-            </div>
+        <a class="navbar-brand" href="menu.html">Menu</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav">
+                <a id="logout_link" class="navbar-brand" href="/logout">Logout</a>
+            </ul>
         </div>
     </nav>
 
@@ -46,27 +55,28 @@
         <div class="row" style="margin: auto auto;">
             {% for order in orders %}
             <div class="card card_display" style="width: 19rem; text-align: center;">
-                <h5 class="card-title">Order Number: {{order.id}}</h5>
-                <h6 class="card-subtitle mb-2">Order Status: {{order.order_status}}</h6>
-                <h6 class="card-subtitle mb-2">Table Number: {{order.table_id}}</h6>
-                <p class="card-text">
-                    <div class="row">
-                        <div class="col"><span>Item</span></div>
-                        <div class="col"><span>Quantity</span></div>
-                    </div>
-                    {% for item in order.get_orders.all %}
-                    <div class="row">
-                        <div class="col">{{item.item.item_name}}</div>
-                        <div class="col quantity">{{item.quantity}}</div>
-                    </div>
-                        <!-- <div class="row">
-                                <div class="col">Food 2</div>
-                                <div class="col quantity">5</div>
-                            </div> -->
+                
+                    <h5 class="card-title">Order Number: {{order.id}}</h5>
+                    <h6 class="card-subtitle mb-2">Order Status: {{order.order_status}}</h6>
+                    <h6 class="card-subtitle mb-2">Table Number: {{order.table_id}}</h6>
+                    <h6 class="card-subtitle mb-2 card-pad"></h6>
+                    <p class="card-text">
+                        <div class="row">
+                            <div class="col"><span>Item</span></div>
+                            <div class="col"><span>Quantity</span></div>
+                        </div>
+                        {% for item in order.get_orders.all %}
+                        <div class="row">
+                            <div class="col">{{item.item.item_name}}</div>
+                            <div class="col quantity">{{item.quantity}}</div>
+                        </div>
+                     
                             {% endfor %}
                         </p>
-                        <form action="#" method="POST">
+                       
+                        <form action="/update/status" method="POST">
                             {% csrf_token %}
+                            <input type="hidden" value="{{order.id}}" name="order_id">
                             <select class="drop_down" name="order_status">
                                 <option value="default">Select Status</option>
                                 <option value="process">In Progress</option>
@@ -75,12 +85,9 @@
                             </select>
                             <input type="submit" class="button_status" name="submit" value="Update Status">
                         </form>
-                        <a href="#" class="card-link">Edit Order</a>
+                        <a href="/edit/{{order.id}}" class="card-link">Edit Order</a>
                     </div>
                     {% endfor %}
-
-                </div>
-            </div>
 
 <script type="text/javascript">
     $(document).ready(function(){

@@ -1,101 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="utf-8">
-	<title>Login and Registration</title>
-	<meta name="description" content="Page login and registration">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	{% load static %}
-	<link rel="stylesheet" type="text/css" href="{% static 'order/css/styles.css' %}">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	{% load static %}
+	<style>
+		body {
+			background-image: url("static/order/images/left.webp")
+		}
+		.messages {
+			list-style-type: none;
+		}
+		label {
+			font-size: 14px;
+		}
+		.error {
+			color: red;
+		}
+		.container {
+			margin-top: 20px;
+		}
+		.jumbotron {
+			background: white;
+		}
+	</style>
+	<title>Login & Registration</title>
 </head>
+
 <body>
 	<div class="container">
-		<div class="jumbotron jumbotron-fluid">
-			<div class="container">
-				<form class="form-horizontal" name="registration" action="/register" onsubmit="validateForm()" method="POST">
-					{% csrf_token %}
-					<input type="hidden" name="registration" value="#">
-					<div class="form-group">
-						<label class="control-label col-sm-12"><h3>Registration</h3></label>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-sm-4" for="restaurant_name">Restaurant Name</label>
-						<div class="col-sm-12">
-							<input type="text" class="form-control" name="restaurant_name" required>
-						</div>
-					</div>
-					<div class="form-group"> 
-						<label class="control-label col-sm-4" for="email">Email</label>
-						<div class="col-sm-12"> 
-							<input type="email" class="form-control" name="email" required>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-sm-4" for="phone_number">Phone number :</label>
-						<div class="col-sm-12"> 
-							<input type="text" class="form-control" name="phone_number" required>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-sm-4" for="location">Location :</label>
-						<div class="col-sm-12"> 
-							<input type="text" class="form-control" name="location" required>
-						</div>
-					</div>
-					
-					<div class="form-group"> 
-						<label class="control-label col-sm-4" for="password">Password</label>
-						<div class="col-sm-12"> 
-							<input type="password" class="form-control" name="password" required>
-						</div>
-					</div>
-					<div class="form-group"> 
-						<label class="control-label col-sm-6" for="confirm_password">Confirm Password</label>
-						<div class="col-sm-12"> 
-							<input type="password" class="form-control" name="confirm_password" required>
-						</div>
-					</div>
-					<div class="form-group"> 
-						<div class="col-sm-offset-2 col-sm-12">
-							<button type="submit" class="btn btn-primary">Register</button>
-						</div>
-					</div>
-					{% if messages %}
-					<ul class="messages">    
-						{% for message in messages %}    
-						<li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
-						{% endfor %}
-					</ul>
-					{% endif %}
-				</form>
 
-				<form class="form-horizontal" action="/login" method="POST">
-					{% csrf_token %}
-					<input type="hidden" name="login" value="#">
-					<div class="form-group">
-						<label class="control-label col-sm-12"><h3>Login</h3></label>
+		<div class="jumbotron text-center" style="max-width: 400px; position: relative; padding: 0px; max-height: 100px;">
+			<img src="static/order/images/logo.png" style="max-height: 100px" alt="">
+		</div>
+		
+		{% if messages %}
+		<ul class="messages">
+			{% for message in messages %}
+			<li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+			{% endfor %}
+		</ul>
+		{% endif %}
+		<div id="accordion" style="max-width: 400px; ">
+			<div class="card">
+				<div class="card-header" id="headingOne">
+					<h5 class="mb-0">
+						<button class="btn btn-link btn-lg" data-toggle="collapse" data-target="#collapseOne"
+							aria-expanded="true" aria-controls="collapseOne">
+							Login
+						</button>
+					</h5>
+				</div>
+
+				<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+					<div class="card-body">
+
+						<form class="form-horizontal" action="/login" method="POST">
+							{% csrf_token %}
+							<input type="hidden" name="login" value="#">
+							<div class="form-group" style="margin: 0px 0px">
+								<label class="control-label col-sm-12">
+								</label>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-6" for="email">Email</label>
+								<div class="col-sm-12">
+									<input type="email" class="form-control" name="email">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-6" for="password">Password</label>
+								<div class="col-sm-12">
+									<input type="password" class="form-control" name="password">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-2 col-sm-12">
+									<button type="submit" class="btn btn-primary ">Login</button>
+								</div>
+							</div>
+						</form>
+
 					</div>
-					<div class="form-group">
-						<label class="control-label col-sm-4" for="email">Email</label>
-						<div class="col-sm-12">
-							<input type="email" class="form-control" name="email">
-						</div>
+				</div>
+			</div>
+			<div class="card">
+				<div class="card-header" id="headingTwo">
+					<h5 class="mb-0">
+						<button class="btn btn-link btn-lg collapsed" data-toggle="collapse" data-target="#collapseTwo"
+							aria-expanded="false" aria-controls="collapseTwo">
+							Registration
+						</button>
+					</h5>
+				</div>
+				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+					<div class="card-body">
+						<form class="form-horizontal" name="registration" action="/register" onsubmit="validateForm()"
+							method="POST">
+							{% csrf_token %}
+							<input type="hidden" name="registration" value="#">
+							<div class="form-group" style="margin: 0px 0px">
+								<label class="control-label col-sm-12">
+								</label>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-6" for="restaurant_name">Restaurant Name</label>
+								<div class="col-sm-12">
+									<input type="text" class="form-control" name="restaurant_name" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-6" for="email">Email</label>
+								<div class="col-sm-12">
+									<input type="email" class="form-control" name="email" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-6" for="phone_number">Phone Number</label>
+								<div class="col-sm-12">
+									<input type="tel" class="form-control" name="phone_number" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-6" for="location">Location</label>
+								<div class="col-sm-12">
+									<input type="text" class="form-control" name="location" required>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="control-label col-sm-6" for="password">Password</label>
+								<div class="col-sm-12">
+									<input type="password" class="form-control" name="password" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-6" for="confirm_password">Confirm Password</label>
+								<div class="col-sm-12">
+									<input type="password" class="form-control" name="confirm_password" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-2 col-sm-12">
+									<button type="submit" class="btn btn-primary">Register</button>
+								</div>
+							</div>
+						</form>
+
 					</div>
-					<div class="form-group">
-						<label class="control-label col-sm-4" for="password">Password</label>
-						<div class="col-sm-12"> 
-							<input type="password" class="form-control" name="password">
-						</div>
-					</div>
-					<div class="form-group"> 
-						<div class="col-sm-offset-2 col-sm-12">
-							<button type="submit" class="btn btn-primary">Login</button>
-						</div>
-					</div>
-				</form>
+				</div>
 			</div>
 		</div>
+	</div>
 	</div>
 
 	<script type="text/javascript">
@@ -108,16 +173,18 @@
 			// alert(pwd.length);
 			var confirm_pwd = document.forms["registration"]["confirm_password"].value;
 			var letters = /^[A-Za-z]+$/;
-			if ((f_name.length < 3) || (l_name.length < 3) || f_name.match(letters) || l_name.match(letters)){
+			if ((f_name.length < 3) || (l_name.length < 3) || f_name.match(letters) || l_name.match(letters)) {
 				alert("Name must be filled out/should contain only characters");
 				return false;
 			}
 			// alert("ohhhh");
-			if (pwd.length < 8){
+			if (pwd.length < 8) {
 				alert("Invalid passwrod");
 				return false;
 			}
 		} 
 	</script>
 </body>
+
 </html>
+
