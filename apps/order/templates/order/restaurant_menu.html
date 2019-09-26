@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <style>
+        table {
+            text-align: center;
+        }
+
+        .food-name {
+            width: 175px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .main-content {
+            width: 50%;
+        }
+
+        .center {
+            padding: 0px;
+            margin: 20px;
+            width: 100%;
+            text-align: center;
+            list-style-position: inside;
+        }
+
+        input {
+            text-decoration: none;
+        }
+
+        .button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        .delbutton {
+            background-color: #f44336;
+            ;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        .updateButton {
+
+            background-color: #008CBA;
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+
+        .modal {
+            text-align: center;
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Stay in place */
+            z-index: 1;
+            /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            /* Full width */
+            height: 100%;
+            /* Full height */
+            overflow: auto;
+            /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0);
+            /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4);
+            /* Black w/ opacity */
+        }
+
+        /* Modal Content/Box */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 70%;
+            /* Could be more or less, depending on screen size */
+        }
+
+        /* The Close Button */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close2 {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .close2:hover,
+        .close2:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <h1> View Menu </h1>
+
+
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <a class="nav-link" name="new_item" id="add-item" href="#myModal2"> add item</a>
+
+        </nav>
+
+        <!-- Modal content -->
+     
+
+    <div id="main-content">
+        <ol class="center">
+            <table>
+                {% for menuitems in list_of_items %}
+                <input type="hidden" name="this_item" value="{{menuitems.id}}">
+                <tr>
+                    <td>
+                        <li></li>
+                    </td>
+                    <td><input type='submit' class='button' id="myBtn{{menuitems.id}}" value="Edit"></td>
+                    <td><input type='submit' class='delbutton' value="Delete"></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </ol>
+    </div>
+
+
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <form action="/edit_item" method="post">
+                {% csrf_token %}
+            <h1>Edit Item</h1>
+            <p>Item Name:<input name="edited_name" type="text"> </p>
+            <p>Description:<input name="edited_desc" type="text"></p>
+            <p>Price:<input name="edited_price" type="text"></p>
+            <input type="submit" class="updateButton" value="Update">
+            </form>
+        </div>
+
+    </div>
+
+   
+
+
+
+        <div id="main-content">
+            <ol class="center">
+                <table>
+                    <tr>
+                        <td>
+                            <li></li>
+                        </td>
+                        <td class="food-name">This is name is this long</td>
+                        <td></td>
+                        <td></td>
+                        </li>
+                    </tr>
+                    <tr>
+                        <td>
+                            <li></li>
+                        </td>
+                        <td class="food-name">This is name is this long</td>
+                        <td><input type='submit' class='button' id="myBtn2" value="Edit"></td>
+                        <td><input type='submit' class='delbutton' value="Delete"></td>
+                        </li>
+                    </tr>
+                    <tr>
+                        <td>
+                            <li></li>
+                        </td>
+                        <td class="food-name">This is name is this long</td>
+                        <td><input type='submit' class='button' id="myBtn3" value="Edit"></td>
+                        <td><input type='submit' class='delbutton' value="Delete"></td>
+                        </li>
+                    </tr>
+                    <tr>
+                        <td>
+                            <li></li>
+                        </td>
+                        <td class="food-name">This is name is this long</td>
+                        <td><input type='submit' class='button' id="myBtn4" value="Edit"></td>
+                        <td><input type='submit' class='delbutton' value="Delete"></td>
+                        </li>
+                    </tr>
+                    <tr>
+                        <td>
+                            <li></li>
+                        </td>
+                        <td class="food-name">This is name is this long</td>
+                        <td><input type='submit' class='button' id="myBtn5" value="Edit"></td>
+                        <td><input type='submit' class='delbutton' value="Delete"></td>
+                        </li>
+                    </tr>
+                    <tr>
+                        <td>
+                            <li></li>
+                        </td>
+                        <td class="food-name">This is name is this long</td>
+                        <td><input type='submit' class='button' id="myBtn6" value="Edit"></td>
+                        <td><input type='submit' class='delbutton' value="Delete"></td>
+                        </li>
+                    </tr>
+                    <tr>
+                        <td>
+                            <li></li>
+                        </td>
+                        <td class="food-name">This is name is this long</td>
+                        <td><input type='submit' class='button' id="myBtn7" value="Edit"></td>
+                        <td><input type='submit' class='delbutton' value="Delete"></td>
+                        </li>
+                    </tr>
+                    <tr>
+                        <td>
+                            <li></li>
+                        </td>
+                        <td class="food-name">This is name is this long</td>
+                        <td><input type='submit' class='button' id="myBtn8" value="Edit"></td>
+                        <td><input type='submit' class='delbutton' value="Delete"></td>
+                        </li>
+                    </tr>
+                    <tr>
+                        <td>
+                            <li></li>
+                        </td>
+                        <td class="food-name">This is name is this long</td>
+                        <td><input type='submit' class='button' id="myBtn9" value="Edit"></td>
+                        <td><input type='submit' class='delbutton' value="Delete"></td>
+                        </li>
+                    </tr>
+                    <tr>
+                        <td>
+                            <li></li>
+                        </td>
+                        <td class="food-name">This is name is this long</td>
+                        <td><input type='submit' class='button' id="myBtn10" value="Edit"></td>
+                        <td><input type='submit' class='delbutton' value="Delete"></td>
+                        </li>
+                    </tr>
+                    <tr>
+                        <td>
+                            <li></li>
+                        </td>
+                        <td class="food-name">This is name is this long</td>
+                        <td><input type='submit' class='button' id="myBtn11" value="Edit"></td>
+                        <td><input type='submit' class='delbutton' value="Delete"></td>
+                        </li>
+                    </tr>
+                    <tr>
+                        <td>
+                            <li></li>
+                        </td>
+                        <td class="food-name">This is name is this long</td>
+                        <td><input type='submit' class='button' id="myBtn11" value="Edit"></td>
+                        <td><input type='submit' class='delbutton' value="Delete"></td>
+                        </li>
+                    </tr>
+                    <tr>
+                        <td>
+                            <li></li>
+                        </td>
+                        <td class="food-name">This is name is this long</td>
+                        <td><input type='submit' class='button' id="myBtn11" value="Edit"></td>
+                        <td><input type='submit' class='delbutton' value="Delete"></td>
+                        </li>
+                    </tr>
+
+
+
+                    <!-- <li>Food <input type='submit' class='button' id="myBtn1" value="Edit"><input type='submit' class='delbutton'
+          value="Delete"></li>
+      <li>Food <input type='submit' class='button' id="myBtn2" value="Edit"><input type='submit' class='delbutton'
+          value="Delete"></li>
+      <li>Food <input type='submit' class='button' id="myBtn3" value="Edit"><input type='submit' class='delbutton'
+          value="Delete"></li>
+      <li>Food <input type='submit' class='button' id="myBtn4" value="Edit"><input type='submit' class='delbutton'
+          value="Delete"></li>
+      <li>Food <input type='submit' class='button' id="myBtn5" value="Edit"><input type='submit' class='delbutton'
+          value="Delete"></li>
+      <li>Food <input type='submit' class='button' id="myBtn6" value="Edit"><input type='submit' class='delbutton'
+          value="Delete"></li>
+      <li>Food <input type='submit' class='button' id="myBtn7" value="Edit"><input type='submit' class='delbutton'
+          value="Delete"></li>
+      <li>Food <input type='submit' class='button' id="myBtn8" value="Edit"><input type='submit' class='delbutton'
+          value="Delete"></li>
+      <li>Food <input type='submit' class='button' id="myBtn9" value="Edit"><input type='submit' class='delbutton'
+          value="Delete"></li>
+      <li>Food <input type='submit' class='button' id="myBtn10" value="Edit"><input type='submit' class='delbutton'
+          value="Delete"></li>
+      <li>Food <input type='submit' class='button' id="myBtn11" value="Edit"><input type='submit' class='delbutton'
+          value="Delete"></li>
+      <li>Food <input type='submit' class='button' id="myBtn12" value="Edit"><input type='submit' class='delbutton'
+          value="Delete"></li>
+      <li>Food <input type='submit' class='button' id="myBtn13" value="Edit"><input type='submit' class='delbutton'
+          value="Delete"></li> -->
+                </table>
+                <!-- <li>Food <input type='submit' class='button' id="myBtn14" value="Edit"><input type='submit' class='button' value="Delete"></li>
+    <li>Food <input type='submit' class='button' id="myBtn" value="Edit"><input type='submit' class='button' value="Delete"></li>
+    <li>Food <input type='submit' class='button' id="myBtn" value="Edit"><input type='submit' class='button' value="Delete"></li>
+    <li>Food <input type='submit' class='button' id="myBtn" value="Edit"><input type='submit' class='button' value="Delete"></li>
+    <li>Food <input type='submit' class='button' id="myBtn" value="Edit"><input type='submit' class='button' value="Delete"></li>
+    <li>Food <input type='submit' class='button' id="myBtn" value="Edit"><input type='submit' class='button' value="Delete"></li>
+    <li>Food <input type='submit' class='button' id="myBtn" value="Edit"><input type='submit' class='button' value="Delete"></li>
+    <li>Food <input type='submit' class='button' id="myBtn" value="Edit"><input type='submit' class='button' value="Delete"></li>
+    <li>Food <input type='submit' class='button' id="myBtn" value="Edit"><input type='submit' class='button' value="Delete"></li>
+    <li>Food <input type='submit' class='button' id="myBtn" value="Edit"><input type='submit' class='button' value="Delete"></li>
+    <li>Food <input type='submit' class='button' id="myBtn" value="Edit"><input type='submit' class='button' value="Delete"></li>
+    <li>Food <input type='submit' class='button' id="myBtn" value="Edit"><input type='submit' class='button' value="Delete"></li>
+    <li>Food <input type='submit' class='button' id="myBtn" value="Edit"><input type='submit' class='button' value="Delete"></li>
+    <li>Food <input type='submit' class='button' id="myBtn" value="Edit"><input type='submit' class='button' value="Delete"></li>
+    <li>Food <input type='submit' class='button' id="myBtn" value="Edit"><input type='submit' class='button' value="Delete"></li>
+    <li>Food <input type='submit' class='button' id="myBtn" value="Edit"><input type='submit' class='button' value="Delete"></li>  -->
+            </ol>
+        </div>
+    </div>
+    <!-- <div class="container"> -->
+
+    <!-- Trigger the modal with a button -->
+    <!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button> -->
+
+    <!-- Modal -->
+    <!-- <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog"> -->
+
+    <!-- Modal content-->
+    <!-- <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Modal Header</h4>
+          </div>
+          <div class="modal-body">
+            <p>Some text in the modal.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div> -->
+
+    <!-- <button class="button" id="myBtn">Edit</button> -->
+
+    <div id="myModal2" class="modal">
+        <div class="modal-content">
+           <span class="close2">&times;</span>
+           <h1> Add Item</h1>
+           <p>Item Name:<input type="text" name="new_name"> </p>
+           <p>Description:<input type="text" name="new_desc"></p>
+           <p>Price:<input type="text" name="new_price"></p>
+           <input type="submit" class="updateButton" value="Add">
+       </div> 
+   </div>
+
+
+    <script>
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the button that opens the modal
+        // var btn = document.getElementById("myBtn");
+        var btn1 = document.getElementById("myBtn1");
+        var btn2 = document.getElementById("myBtn2");
+        var btn3 = document.getElementById("myBtn3");
+        var btn4 = document.getElementById("myBtn4");
+        var btn5 = document.getElementById("myBtn5");
+        var btn6 = document.getElementById("myBtn6");
+        var btn7 = document.getElementById("myBtn7");
+        var btn8 = document.getElementById("myBtn8");
+        var btn9 = document.getElementById("myBtn9");
+        var btn10 = document.getElementById("myBtn10");
+        var btn11 = document.getElementById("myBtn11");
+        var btn12 = document.getElementById("myBtn12");
+        var btn13 = document.getElementById("myBtn13");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks the button, open the modal 
+        // btn.onclick = function () {
+        //   modal.style.display = "block";
+        // }
+        btn1.onclick = function () {
+            modal.style.display = "block";
+        }
+        btn2.onclick = function () {
+            modal.style.display = "block";
+        }
+        btn3.onclick = function () {
+            modal.style.display = "block";
+        }
+        btn4.onclick = function () {
+            modal.style.display = "block";
+        }
+        btn5.onclick = function () {
+            modal.style.display = "block";
+        }
+        btn6.onclick = function () {
+            modal.style.display = "block";
+        }
+        btn7.onclick = function () {
+            modal.style.display = "block";
+        }
+        btn8.onclick = function () {
+            modal.style.display = "block";
+        }
+        btn9.onclick = function () {
+            modal.style.display = "block";
+        }
+        btn10.onclick = function () {
+            modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+
+        //*********************************************************************************************************************//
+        var modal2 = document.getElementById("myModal2")
+        var span2 = document.getElementsByClassName("close2")[0];
+
+        // When the user clicks the button, open the modal 
+        // btn.onclick = function () {
+        //   modal.style.display = "block";
+        // }
+        var add_item = document.getElementById("add-item");
+        add_item.onclick = function () {
+            modal2.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span2.onclick = function () {
+            modal2.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal2) {
+                modal2.style.display = "none";
+            }
+        }
+    </script>
+
+
+
+</body>
+
+</html>
