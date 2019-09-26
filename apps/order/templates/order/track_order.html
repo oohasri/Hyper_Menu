@@ -48,13 +48,8 @@
                 <div class="card-body">
                     <form action="/place_order" method="POST">
                         {% csrf_token %}
-                        {% for item in this_items %}
-
-                            <h5 class="card-title">{{item.item.item_name}}  -   {{item.quantity}}</h5>
-                            
-                        {% endfor %}
-                            <h4>Total Price: ${{this_order.order_total}}</h4>
-                            <input type="submit" class="btn btn-primary" value="Place Order!">
+                            <h4>Your order is in process! Wait time is 10min</h4>
+                            <input type="submit" class="btn btn-primary" value="Cancel Order!">
                     </form>
                 </div>
 

@@ -2,11 +2,11 @@
 	padding: 0px;
 	margin: 0px auto;
 }
-form{
+/*form{
 	display: inline-block;
 	vertical-align: top;
 	width: 49%;
-}
+}*/
 .center{
 	width: 120px;
     margin: 10px auto;
@@ -22,4 +22,10 @@ form{
 	left: 0px;
 	right: 0px;
 	width: 100%;
+}
+.btn{
+	z-index: 30;
+}
+.display_block{
+	display: block;
 }
