@@ -10,4 +10,5 @@ urlpatterns = [
 	url(r'^order/track_order$', views.order_track),
 	url(r'^order/dashboard$', views.display_active_orders),
 	url(r'^register$', views.register),
+	url(r'^api/order/dashboard$', views.reload_orders),
 ]

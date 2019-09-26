@@ -99,6 +99,13 @@ def display_active_orders(request):
 	return render(request,"order/active_orders.html",context)
 # Create your views here.
 
+def reload_orders(request):
+	all_order = Order.objects.all()
+	context = {
+		"orders":all_order,
+	}
+	return render(request,"order/active_orders.html")
+
 # register a restaurant
 def register(request):
     if request.method != "POST":
