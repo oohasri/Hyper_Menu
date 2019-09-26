@@ -25,7 +25,6 @@ def menu_customer(request, restaurant_id, table_id):
 	}
 	return render(request, "order/menu.html", dict)
 
-<<<<<<< HEAD
 def to_cart(request):
 	order = Order.objects.create(restaurant = Restaurant.objects.get(id=request.POST['restaurantid'][0]), table_id = request.session['table_id'], order_status = "pending")
 	order_id = order.id
@@ -88,7 +87,6 @@ def order_track(request):
 		'this_order' : this_order
 	}
 	return render(request, "order/track_order.html", dict)
-=======
 
 def display_active_orders(request):
 	all_order = Order.objects.all()
@@ -96,7 +94,6 @@ def display_active_orders(request):
 		"orders":all_order,
 	}
 	return render(request,"order/active_orders.html",context)
->>>>>>> 09caa313a5b9753c96bd3dd1e7b28bc4bc3dcfda
 # Create your views here.
 
 # register a restaurant
