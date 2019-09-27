@@ -1,47 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="utf-8">
 	<title>Edit Order</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	{% load static %}
 	<link rel="stylesheet" type="text/css" href="{% static 'order/css/styles.css' %}">
 	<style>
-		#logout_link{
+		#logout_link {
 			margin-left: 950px;
 		}
-		h4{
+
+		h4 {
 			margin-top: 20px;
 		}
-		#remove_link{
+
+		#remove_link {
 			color: red;
+		}
+		.container{
+			margin: 0 auto;
 		}
 	</style>
 </head>
+
 <body>
-		<!-- <div class="jumbotron text-center" style="margin-bottom:0">
+	<!-- <div class="jumbotron text-center" style="margin-bottom:0">
 				<h1>{{this_rest.restaurant_name}}</h1>
 			</div> -->
-		
-			<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-				<a class="navbar-brand" href="/view_menu">Menu</a>
-				<a class="navbar-brand" href="/order/dashboard">Active Orders</a>
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="collapsibleNavbar">
-					<ul class="navbar-nav">
-						<li class="nav-item">
-						</li>
-						<a id="logout_link" class="navbar-brand" href="/logout">Logout</a>
-					</ul>
-				</div>
-			</nav>
-		
+
+	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+		<a class="navbar-brand" href="/view_menu">Menu</a>
+		<a class="navbar-brand" href="/order/dashboard">Active Orders</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="collapsibleNavbar">
+			<ul class="navbar-nav">
+				<li class="nav-item">
+				</li>
+				<a id="logout_link" class="navbar-brand" href="/logout">Logout</a>
+			</ul>
+		</div>
+	</nav>
+
 	<div class="container">
-		
+
 		<h4>Edit Order Number : {{order.id}}</h4>
 		<table class="table">
 			<thead class="thead-light">
@@ -56,8 +64,8 @@
 				{% for order_item in order.get_orders.all %}
 				<tr>
 					<td>{{order_item.item.item_name}}</td>
-					<td>2</td>
-					<td>$5</td>
+					<td>{{order_item.quantity}}</td>
+					<td>{{order_item.item.item_price}}</td>
 					<td><a id="remove_link" href="/remove/{{order.id}}/{{order_item.id}}">Remove</a></td>
 				</tr>
 				{% endfor %}
@@ -68,4 +76,5 @@
 		</table>
 	</div>
 </body>
+
 </html>
