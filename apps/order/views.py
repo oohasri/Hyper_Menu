@@ -231,6 +231,7 @@ def add_item_to_order(request,order_id):
 
 def edit_update_item(request, item_id):
 	if request.method == "POST":
+		print("heloooooooooo")
 		this_item = Item.objects.get(id=item_id)
 		item_name = request.POST['edit_name']
 		item_desc = request.POST['edit_desc']
@@ -254,6 +255,7 @@ def create_new_item_order(request):
 		#total = 0
 		for item in this_order.get_orders.all():
 			 this_order.order_total += item.item.item_price * qty
+			 this_order.save()
 		print(this_order.order_total)
 		return redirect('/order/dashboard')
 
