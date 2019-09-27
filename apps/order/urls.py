@@ -3,7 +3,6 @@ from . import views
 
 urlpatterns = [
 	url(r'^$', views.index),
-
 	url(r'^restaurantid=(?P<restaurant_id>\d+)/tableid=(?P<table_id>\d+)$', views.menu_customer),
 	url(r'^add_to_cart$', views.to_cart),
 	url(r'^restaurantid=(?P<restaurant_id>\d+)/tableid=(?P<table_id>\d+/checkout)$', views.checkout),
@@ -20,8 +19,6 @@ urlpatterns = [
 	url(r'^view_menu$', views.view_menu),	
 	url(r'^add_item$', views.add_item),
 	url(r'^edit_page/(?P<item_id>\d+)$', views.edit_item),
-	url(r'edit_page/(?P<item_id>\d+)/update$', views.edit_update_item),
+	url(r'edit_page/(?P<item_id>\d+)/update$', views.edit_item),
 	url(r'^delete/(?P<item_id>\d+)$', views.delete),
-	url(r'^order/add/item/(?P<order_id>\d+)$',views.add_item_to_order),
-	url(r'^post/order/add/item$',views.create_new_item_order)
 ]
