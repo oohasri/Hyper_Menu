@@ -64,8 +64,11 @@ def checkout(request, restaurant_id, table_id):
 
 def order_placed(request):
 	this_order = Order.objects.get(id=request.session["orderid"], table_id=request.session["table_id"])
-	this_order.status="Order placed"
+	print(this_order.order_status)
+	this_order.order_status="Order placed"
 	this_order.save()
+	print(this_order.order_status)
+	print("aaaaaaaaaaaa")
 
 	this_restaurant = Restaurant.objects.filter(id=request.session["restaurant_id"])
 	print(this_order.id)
@@ -97,10 +100,9 @@ def order_track(request):
 def display_active_orders(request):
 	rest_id = request.session['id']
 	this_rest = Restaurant.objects.get(id=rest_id)
-	all_order = Order.objects.exclude(order_status="ready")
+	all_order = Order.objects.exclude(order_status= "ready")
+	all_order = all_order.exclude(order_status="pending")
 	all_order=all_order.filter(restaurant=this_rest)
-	#all_order = all_order.exclude(order_status="pending")
-	#all_order = Order.objects.all()
 	for order in all_order:
 		print("all",order.get_orders.all())
 		if not order.get_orders.all():
