@@ -153,6 +153,9 @@
     #logout{
       margin-left: 900px;
     }
+    #qty{
+        width: 50px;
+    }
   </style>
 </head>
 
@@ -191,6 +194,7 @@
 					<th scope="col">No.</th>
                     <th scope="col">Item</th>
                     <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
 					<th scope="col"></th>
 				</tr>
 			</thead>
@@ -201,7 +205,8 @@
 				<tr>
                     <td><input type="checkbox" name="item" value="{{menuitems.id}}"></td>
                     <td>{{menuitems.item_name}}</td>
-					<td>{{menuitems.item_price}}</td>
+                    <td>{{menuitems.item_price}}</td>
+                    <td><input id="qty" type="text" name="qty"></td>
 				</tr>
 				{% endfor %}
                 </tr>

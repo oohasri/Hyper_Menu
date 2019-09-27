@@ -208,12 +208,11 @@
 				<tr>
           <td><li></li></td>
 					<td>{{menuitems.item_name}}</td>
-					<td>{{menuitems.item_price}}</td>
+					<td>${{menuitems.item_price}}</td>
 					<td><a href="/edit_page/{{menuitems.id}}" name="">Edit</a> | <a href="/delete/{{menuitems.id}}" name="">Delete</a></td>
 				</tr>
 				{% endfor %}
 				<tr>
-					<td><a class="add_item_btn btn btn-primary" href="">Add Items</a></td>
 				</tr>
 			</tbody>
     </table>

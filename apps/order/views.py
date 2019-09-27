@@ -100,11 +100,9 @@ def order_track(request):
 def display_active_orders(request):
 	rest_id = request.session['id']
 	this_rest = Restaurant.objects.get(id=rest_id)
-	# exclude_list = ["ready","pending"]
 	all_order = Order.objects.exclude(order_status= "ready")
 	all_order = all_order.exclude(order_status="pending")
 	all_order=all_order.filter(restaurant=this_rest)
-	# all_order = Order.objects.all()
 	for order in all_order:
 		print("all",order.get_orders.all())
 		if not order.get_orders.all():
@@ -233,6 +231,7 @@ def add_item_to_order(request,order_id):
 
 def edit_update_item(request, item_id):
 	if request.method == "POST":
+		print("heloooooooooo")
 		this_item = Item.objects.get(id=item_id)
 		item_name = request.POST['edit_name']
 		item_desc = request.POST['edit_desc']
@@ -242,15 +241,22 @@ def edit_update_item(request, item_id):
 		this_item.item_price = item_price
 		this_item.item_description = item_desc
 		this_item.save()
-		return redirect('/order/dashboard')
+		return redirect('/view_menu')
 		 
 def create_new_item_order(request):
 	if request.method == "POST":
 		item_list = request.POST.getlist('item')
 		order_id = request.POST['order_id']
+		qty = 2
 		this_order = Order.objects.get(id=order_id)
-		for item in item_list:		
-		 	print("helloooo",item,order_id)
+		for item in item_list:
+			this_item = Item.objects.get(id=item)
+			Order_item.objects.create(order=this_order,item=this_item,quantity=qty)
+		#total = 0
+		for item in this_order.get_orders.all():
+			 this_order.order_total += item.item.item_price * qty
+			 this_order.save()
+		print(this_order.order_total)
 		return redirect('/order/dashboard')
 
 		
